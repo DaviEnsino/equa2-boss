@@ -1,0 +1,6 @@
+{
+  "name": "Bhaskara Boss Battle",
+  "description": "RPG de turnos educativo para dominar equações do 2º grau e o discriminante (Δ) enfrentando o Arquimago de Bhaskara.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
