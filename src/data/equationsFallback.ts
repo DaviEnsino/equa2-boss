@@ -245,7 +245,8 @@ export const EQUATIONS_FALLBACK: Equacao[] = [
 
 export async function loadEquations(): Promise<Equacao[]> {
   try {
-    const response = await fetch('/assets/aistudio/equa2_602af05a.json');
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    const response = await fetch(`${baseUrl}assets/aistudio/equa2_602af05a.json`);
     if (!response.ok) {
       return EQUATIONS_FALLBACK;
     }
