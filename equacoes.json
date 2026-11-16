@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "nivel": "facil",
+    "equacao": "x² - 5x + 6 = 0",
+    "tem_raiz_real": true,
+    "raizes": [2, 3],
+    "dica": "Δ = (-5)² - 4(1)(6) = 1"
+  },
+  {
+    "id": 2,
+    "nivel": "facil",
+    "equacao": "x² - 7x + 10 = 0",
+    "tem_raiz_real": true,
+    "raizes": [2, 5],
+    "dica": "Δ = (-7)² - 4(1)(10) = 9"
+  },
+  {
+    "id": 3,
+    "nivel": "facil",
+    "equacao": "x² - 4x + 3 = 0",
+    "tem_raiz_real": true,
+    "raizes": [1, 3],
+    "dica": "Δ = (-4)² - 4(1)(3) = 4"
+  },
+  {
+    "id": 4,
+    "nivel": "facil",
+    "equacao": "x² + 2x + 5 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "Δ = 2² - 4(1)(5) = -16 (Contra-feitiço!)"
+  },
+  {
+    "id": 5,
+    "nivel": "facil",
+    "equacao": "x² + 5x + 6 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-3, -2],
+    "dica": "Atenção aos sinais: Δ = 25 - 24 = 1"
+  },
+  {
+    "id": 6,
+    "nivel": "facil",
+    "equacao": "x² - x - 6 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-2, 3],
+    "dica": "Δ = (-1)² - 4(1)(-6) = 25"
+  },
+  {
+    "id": 7,
+    "nivel": "facil",
+    "equacao": "x² - 6x + 9 = 0",
+    "tem_raiz_real": true,
+    "raizes": [3, 3],
+    "dica": "Raiz dupla (Δ = 0): repita o mesmo valor nas duas caixas!"
+  },
+  {
+    "id": 8,
+    "nivel": "facil",
+    "equacao": "x² + x + 4 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "Δ = 1² - 4(1)(4) = -15 (Contra-feitiço!)"
+  },
+  {
+    "id": 9,
+    "nivel": "facil",
+    "equacao": "x² - 2x - 8 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-2, 4],
+    "dica": "Δ = (-2)² - 4(1)(-8) = 36"
+  },
+  {
+    "id": 10,
+    "nivel": "facil",
+    "equacao": "x² + 3x - 10 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-5, 2],
+    "dica": "Δ = 3² - 4(1)(-10) = 49"
+  },
+  {
+    "id": 11,
+    "nivel": "medio",
+    "equacao": "2x² - 10x + 12 = 0",
+    "tem_raiz_real": true,
+    "raizes": [2, 3],
+    "dica": "Cuidado no denominador: 2a = 4 (Δ = 4)"
+  },
+  {
+    "id": 12,
+    "nivel": "medio",
+    "equacao": "x² - 16 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-4, 4],
+    "dica": "Equação incompleta: b = 0 e c = -16 (Δ = 64)"
+  },
+  {
+    "id": 13,
+    "nivel": "medio",
+    "equacao": "2x² + 4x + 5 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "Δ = 4² - 4(2)(5) = -24 (Contra-feitiço!)"
+  },
+  {
+    "id": 14,
+    "nivel": "medio",
+    "equacao": "x² + 6x = 0",
+    "tem_raiz_real": true,
+    "raizes": [-6, 0],
+    "dica": "Equação incompleta: c = 0, então Δ = 36"
+  },
+  {
+    "id": 15,
+    "nivel": "medio",
+    "equacao": "3x² - 3x - 18 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-2, 3],
+    "dica": "Δ = (-3)² - 4(3)(-18) = 225 (√225 = 15)"
+  },
+  {
+    "id": 16,
+    "nivel": "medio",
+    "equacao": "-x² + 4x - 3 = 0",
+    "tem_raiz_real": true,
+    "raizes": [1, 3],
+    "dica": "Atenção ao sinal de a = -1 no denominador (2a = -2)"
+  },
+  {
+    "id": 17,
+    "nivel": "medio",
+    "equacao": "x² + 9 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "b = 0 e c = 9 -> Δ = 0² - 4(1)(9) = -36 (Contra-feitiço!)"
+  },
+  {
+    "id": 18,
+    "nivel": "medio",
+    "equacao": "2x² + 8x + 8 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-2, -2],
+    "dica": "Raiz dupla (Δ = 0): repita o valor nas duas caixas!"
+  },
+  {
+    "id": 19,
+    "nivel": "medio",
+    "equacao": "-x² + 2x + 8 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-2, 4],
+    "dica": "a = -1, b = 2, c = 8 -> Δ = 36"
+  },
+  {
+    "id": 20,
+    "nivel": "medio",
+    "equacao": "3x² - 2x + 4 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "Δ = (-2)² - 4(3)(4) = -44 (Contra-feitiço!)"
+  },
+  {
+    "id": 21,
+    "nivel": "dificil",
+    "equacao": "2x² - 7x + 3 = 0",
+    "tem_raiz_real": true,
+    "raizes": [0.5, 3],
+    "dica": "Raiz fracionária: Δ = 25. As raízes são 1/2 (ou 0,5) e 3."
+  },
+  {
+    "id": 22,
+    "nivel": "dificil",
+    "equacao": "3x² - 11x + 10 = 0",
+    "tem_raiz_real": true,
+    "raizes": [1.667, 2],
+    "dica": "Cuidado com a fração: Δ = 1. Raízes: 5/3 (aprox. 1,67) e 2."
+  },
+  {
+    "id": 23,
+    "nivel": "dificil",
+    "equacao": "x² - 3x + 4 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "Δ = (-3)² - 4(1)(4) = -7 (Contra-feitiço!)"
+  },
+  {
+    "id": 24,
+    "nivel": "dificil",
+    "equacao": "4x² - 4x + 1 = 0",
+    "tem_raiz_real": true,
+    "raizes": [0.5, 0.5],
+    "dica": "Raiz dupla perfeita (Δ = 0): as duas raízes são 1/2 (0,5)."
+  },
+  {
+    "id": 25,
+    "nivel": "dificil",
+    "equacao": "x² - 5x = -6",
+    "tem_raiz_real": true,
+    "raizes": [2, 3],
+    "dica": "Atenção: jogue o -6 para o lado esquerdo antes de começar! (x² - 5x + 6 = 0)"
+  },
+  {
+    "id": 26,
+    "nivel": "dificil",
+    "equacao": "2x² + 5x - 3 = 0",
+    "tem_raiz_real": true,
+    "raizes": [-3, 0.5],
+    "dica": "Δ = 49. Cuidado com o jogo de sinais nas raízes (-3 e 1/2)."
+  },
+  {
+    "id": 27,
+    "nivel": "dificil",
+    "equacao": "-2x² + 3x - 2 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "a = -2, b = 3, c = -2 -> Δ = 9 - 16 = -7 (Contra-feitiço!)"
+  },
+  {
+    "id": 28,
+    "nivel": "dificil",
+    "equacao": "3x² = 10x - 3",
+    "tem_raiz_real": true,
+    "raizes": [0.333, 3],
+    "dica": "Organize a casa: passe tudo para o lado esquerdo (3x² - 10x + 3 = 0)."
+  },
+  {
+    "id": 29,
+    "nivel": "dificil",
+    "equacao": "5x² - 7x + 2 = 0",
+    "tem_raiz_real": true,
+    "raizes": [0.4, 1],
+    "dica": "Δ = 9. Raízes: 2/5 (0,4) e 1."
+  },
+  {
+    "id": 30,
+    "nivel": "dificil",
+    "equacao": "4x² + 2x + 3 = 0",
+    "tem_raiz_real": false,
+    "raizes": [],
+    "dica": "Δ = 2² - 4(4)(3) = 4 - 48 = -44 (Contra-feitiço!)"
+  }
+]

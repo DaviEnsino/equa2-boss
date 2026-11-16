@@ -1,22 +1,446 @@
 <!doctype html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bhaskara Boss Battle — RPG de Equações do 2º Grau</title>
-    <meta name="description" content="RPG de turnos educativo para dominar equações do 2º grau e o discriminante (Δ) enfrentando o Arquimago de Bhaskara." />
+    <meta
+      name="description"
+      content="RPG de turnos educativo para dominar equações do 2º grau e o discriminante (Δ) enfrentando o Arquimago de Bhaskara."
+    />
     <meta property="og:title" content="Bhaskara Boss Battle" />
-    <meta property="og:description" content="RPG de turnos educativo para dominar equações do 2º grau e o discriminante (Δ)." />
+    <meta
+      property="og:description"
+      content="RPG de turnos educativo para dominar equações do 2º grau e o discriminante (Δ)."
+    />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <body class="bg-[#0a0f1a] text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-200">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body>
+    <div class="arena-bg-glow" aria-hidden="true"></div>
+
+    <!-- Botões fixos no canto superior direito: Áudio e Informações (i) -->
+    <div class="top-utility-cluster">
+      <button
+        id="btn-mute"
+        type="button"
+        class="utility-btn"
+        aria-label="Silenciar som"
+        title="Ativar/silenciar som (M)"
+      >
+        <svg id="icon-sound-on" viewBox="0 0 24 24" class="icon-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+        </svg>
+        <svg id="icon-sound-off" viewBox="0 0 24 24" class="icon-svg hidden" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <line x1="22" y1="9" x2="16" y2="15" />
+          <line x1="16" y1="9" x2="22" y2="15" />
+        </svg>
+      </button>
+
+      <button
+        id="btn-info"
+        type="button"
+        class="utility-btn utility-btn-info"
+        aria-label="Regras do jogo"
+        title="Regras e tabela de danos (I)"
+      >
+        <svg viewBox="0 0 24 24" class="icon-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- ================= TELA INICIAL ================= -->
+    <main id="start-screen" class="start-screen">
+      <svg
+        viewBox="0 0 120 120"
+        class="title-emblem"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="crestGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a" />
+            <stop offset="50%" stop-color="#d97706" />
+            <stop offset="100%" stop-color="#92400e" />
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="54" fill="#0f172a" stroke="url(#crestGold)" stroke-width="2.5" />
+        <circle cx="60" cy="60" r="46" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="4 4" />
+        <line x1="26" y1="92" x2="94" y2="28" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" />
+        <line x1="94" y1="92" x2="26" y2="28" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" />
+        <polygon points="60,24 90,80 30,80" fill="#1e293b" stroke="url(#crestGold)" stroke-width="3.5" stroke-linejoin="round" />
+        <polygon points="60,40 76,71 44,71" fill="#dc2626" opacity="0.85" />
+      </svg>
+
+      <h1 class="start-title">Bhaskara Boss Battle</h1>
+
+      <p class="start-subtitle">
+        Enfrente o Arquimago do Discriminante em duelos de turno. Calcule as raízes da equação do 2º grau para atacar ou identifique
+        <span class="mono-highlight">Δ &lt; 0</span> para lançar um contra-feitiço devastador.
+      </p>
+
+      <div class="mechanics-strip">
+        <span>3 Corações cada (6 PV)</span>
+        <span aria-hidden="true">·</span>
+        <span>2 Raízes certas = -2 PV</span>
+        <span aria-hidden="true">·</span>
+        <span>1 Raiz certa = -1 PV</span>
+        <span aria-hidden="true">·</span>
+        <span class="accent-text">Contra-feitiço (Δ &lt; 0) = -4 PV</span>
+      </div>
+
+      <section class="difficulty-card" aria-label="Modo de Dificuldade">
+        <div class="difficulty-heading">Modo de Dificuldade</div>
+        <div id="difficulty-group" class="difficulty-grid" role="radiogroup" aria-label="Modo de Dificuldade">
+          <button type="button" class="diff-btn is-active" data-mode="dinamico" role="radio" aria-checked="true">
+            Dinâmico
+          </button>
+          <button type="button" class="diff-btn" data-mode="facil" role="radio" aria-checked="false">
+            Fácil
+          </button>
+          <button type="button" class="diff-btn" data-mode="medio" role="radio" aria-checked="false">
+            Médio
+          </button>
+          <button type="button" class="diff-btn" data-mode="dificil" role="radio" aria-checked="false">
+            Difícil
+          </button>
+        </div>
+        <p id="difficulty-desc" class="difficulty-desc">
+          Recomendado: o nível sobe automaticamente (Fácil → Médio → Difícil) conforme a vida do Chefe cai.
+        </p>
+      </section>
+
+      <button id="btn-start" type="button" class="btn-primary-cta">
+        <svg viewBox="0 0 24 24" class="icon-svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+          <line x1="13" y1="19" x2="19" y2="13" />
+          <line x1="16" y1="16" x2="20" y2="20" />
+          <line x1="19" y1="21" x2="21" y2="19" />
+          <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+          <line x1="5" y1="14" x2="9" y2="18" />
+          <line x1="7" y1="17" x2="4" y2="20" />
+          <line x1="3" y1="19" x2="5" y2="21" />
+        </svg>
+        Começar Batalha
+      </button>
+
+      <p class="start-shortcuts">Enter para iniciar · I para regras · M para áudio</p>
+    </main>
+
+    <!-- ================= ARENA DE BATALHA ================= -->
+    <main id="battle-screen" class="battle-screen hidden">
+      <header class="arena-topbar">
+        <button id="btn-exit" type="button" class="btn-exit">
+          <svg viewBox="0 0 24 24" class="icon-sm" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Sair da arena
+        </button>
+
+        <div id="turn-indicator" class="turn-indicator">Turno 1 · Nível Fácil</div>
+      </header>
+
+      <!-- Área Superior Central: Boss e Equação -->
+      <section class="boss-zone" aria-label="Área do Chefe">
+        <div class="status-plaque status-plaque-boss">
+          <div class="status-row">
+            <div>
+              <h2 class="combatant-name boss-name">Arquimago de Bhaskara</h2>
+              <p id="boss-phase-label" class="combatant-sub">Fase: Fácil</p>
+            </div>
+            <div class="heart-wrap heart-wrap-right">
+              <div id="boss-hearts" class="hearts-list" role="status" aria-label="Arquimago: 6 de 6 pontos de vida"></div>
+              <span id="boss-hp-text" class="hp-readout">6/6 PV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sprite-stage">
+          <div id="boss-sprite-wrap" class="boss-sprite-wrap anim-idle-boss" data-nivel="facil">
+            <svg viewBox="0 0 220 220" class="boss-rune-ring" aria-hidden="true">
+              <circle cx="110" cy="110" r="98" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="6 6" />
+              <circle cx="110" cy="110" r="80" fill="none" stroke="currentColor" stroke-width="0.9" />
+              <polygon points="110,20 188,155 32,155" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7" />
+            </svg>
+
+            <svg viewBox="0 0 200 200" class="boss-svg" role="img" aria-label="Arquimago de Bhaskara, o chefe da arena">
+              <defs>
+                <radialGradient id="bossGlow" cx="50%" cy="45%" r="50%">
+                  <stop offset="0%" stop-color="currentColor" stop-opacity="0.3" />
+                  <stop offset="100%" stop-color="currentColor" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="robeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#1e293b" />
+                  <stop offset="60%" stop-color="#0f172a" />
+                  <stop offset="100%" stop-color="#020617" />
+                </linearGradient>
+                <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fde68a" />
+                  <stop offset="50%" stop-color="#d97706" />
+                  <stop offset="100%" stop-color="#92400e" />
+                </linearGradient>
+              </defs>
+              <circle cx="100" cy="95" r="85" fill="url(#bossGlow)" />
+              <ellipse cx="100" cy="186" rx="46" ry="8" fill="#020617" opacity="0.65" />
+              <path d="M52 172 C48 134, 58 92, 74 78 L126 78 C142 92, 152 134, 148 172 L130 162 L116 176 L100 164 L84 176 L70 162 Z" fill="url(#robeGrad)" stroke="#334155" stroke-width="2" />
+              <path d="M58 96 Q76 74 96 86 L84 108 Q64 110 58 96 Z" fill="#1e293b" stroke="url(#goldTrim)" stroke-width="2.5" />
+              <path d="M142 96 Q124 74 104 86 L116 108 Q136 110 142 96 Z" fill="#1e293b" stroke="url(#goldTrim)" stroke-width="2.5" />
+              <polygon points="100,98 113,122 87,122" fill="#0f172a" stroke="url(#goldTrim)" stroke-width="2.2" />
+              <polygon points="100,105 107,118 93,118" fill="currentColor" opacity="0.85" />
+              <path d="M72 78 C72 42, 128 42, 128 78 L118 92 L82 92 Z" fill="#0f172a" stroke="url(#goldTrim)" stroke-width="2.2" />
+              <path d="M78 52 L64 26 L86 44 Z" fill="url(#goldTrim)" />
+              <path d="M122 52 L136 26 L114 44 Z" fill="url(#goldTrim)" />
+              <path d="M100 44 L94 22 L100 28 L106 22 Z" fill="url(#goldTrim)" />
+              <ellipse cx="100" cy="68" rx="19" ry="18" fill="#020617" />
+              <path d="M87 65 L95 68 L88 71 Z" fill="#fde047" />
+              <path d="M113 65 L105 68 L112 71 Z" fill="#fde047" />
+              <line x1="158" y1="44" x2="152" y2="174" stroke="url(#goldTrim)" stroke-width="4.5" stroke-linecap="round" />
+              <polygon points="158,20 172,44 144,44" fill="#0f172a" stroke="url(#goldTrim)" stroke-width="2.5" />
+              <circle cx="158" cy="36" r="5" fill="currentColor" />
+              <circle cx="44" cy="112" r="11" fill="currentColor" opacity="0.22" />
+              <circle cx="44" cy="112" r="6" fill="#fde047" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <div id="boss-float-dmg" class="float-damage hidden"></div>
+        </div>
+
+        <!-- Pergaminho da Equação -->
+        <div class="equation-parchment">
+          <div id="equation-meta" class="equation-meta">Equação Desafiadora · Nível Fácil</div>
+          <p id="equation-text" class="equation-text" aria-live="polite">x² - 5x + 6 = 0</p>
+        </div>
+      </section>
+
+      <!-- Área Inferior: Player (Esquerda) e Painel de Comandos (Direita) -->
+      <section class="arena-bottom-grid" aria-label="Área do Jogador e Comandos">
+        <div class="player-column">
+          <div class="player-row">
+            <div class="sprite-stage-player">
+              <div id="player-sprite-wrap" class="player-sprite-wrap anim-idle-player">
+                <svg viewBox="0 0 180 180" class="player-svg" role="img" aria-label="Aprendiz de Bhaskara, o jogador">
+                  <defs>
+                    <linearGradient id="heroCloak" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#1e3a5f" />
+                      <stop offset="100%" stop-color="#0f172a" />
+                    </linearGradient>
+                    <linearGradient id="heroGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fef08a" />
+                      <stop offset="100%" stop-color="#d97706" />
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="86" cy="166" rx="44" ry="8" fill="#020617" opacity="0.65" />
+                  <line x1="138" y1="26" x2="118" y2="162" stroke="#92400e" stroke-width="5" stroke-linecap="round" />
+                  <circle cx="139" cy="24" r="12" fill="#f59e0b" opacity="0.22" />
+                  <polygon points="139,12 148,28 130,28" fill="#0f172a" stroke="url(#heroGold)" stroke-width="2.2" />
+                  <circle cx="139" cy="23" r="4" fill="#fef08a" />
+                  <path d="M44 162 L56 84 C62 72, 108 72, 114 84 L126 162 L104 155 L86 166 L68 155 Z" fill="url(#heroCloak)" stroke="url(#heroGold)" stroke-width="2" />
+                  <path d="M62 84 Q85 96 108 84" fill="none" stroke="url(#heroGold)" stroke-width="3" />
+                  <path d="M64 82 C62 46, 108 46, 106 82 L85 92 Z" fill="#172554" stroke="url(#heroGold)" stroke-width="2" />
+                  <path d="M85 48 L79 38 L91 44 Z" fill="#172554" stroke="url(#heroGold)" stroke-width="1.5" />
+                  <g transform="translate(22, 92) rotate(-10)">
+                    <path d="M4 10 L22 4 L22 30 L4 34 Z" fill="#f8fafc" stroke="#d97706" stroke-width="2" />
+                    <path d="M22 4 L40 10 L40 34 L22 30 Z" fill="#e2e8f0" stroke="#d97706" stroke-width="2" />
+                    <line x1="8" y1="15" x2="18" y2="12" stroke="#475569" stroke-width="1.4" />
+                    <line x1="8" y1="21" x2="18" y2="18" stroke="#475569" stroke-width="1.4" />
+                    <line x1="26" y1="12" x2="36" y2="15" stroke="#475569" stroke-width="1.4" />
+                    <line x1="26" y1="18" x2="36" y2="21" stroke="#475569" stroke-width="1.4" />
+                  </g>
+                </svg>
+              </div>
+              <div id="player-float-dmg" class="float-damage hidden"></div>
+            </div>
+
+            <div class="status-plaque status-plaque-player">
+              <h2 class="combatant-name">Aprendiz de Bhaskara</h2>
+              <div class="heart-wrap">
+                <div id="player-hearts" class="hearts-list" role="status" aria-label="Jogador: 6 de 6 pontos de vida"></div>
+                <span id="player-hp-text" class="hp-readout">6/6 PV</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="battle-log" class="battle-log tone-info" aria-live="polite">
+            <p id="log-message" class="log-message">
+              O Arquimago bloqueou seu caminho! Resolva as raízes ou lance um contra-feitiço se Δ &lt; 0.
+            </p>
+            <p id="log-hint" class="log-hint hidden"></p>
+          </div>
+        </div>
+
+        <div class="command-panel">
+          <form id="command-form" novalidate>
+            <div class="command-header">
+              <span class="command-title">Painel de Feitiços</span>
+              <span class="command-note">Aceita ponto (.) ou vírgula (,)</span>
+            </div>
+
+            <div class="inputs-grid">
+              <div class="input-field">
+                <label for="input-r1">Raiz 1 (R1 · x₁)</label>
+                <input
+                  id="input-r1"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Ex: 2"
+                />
+              </div>
+
+              <div class="input-field">
+                <label for="input-r2">Raiz 2 (R2 · x₂)</label>
+                <input
+                  id="input-r2"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Ex: 3"
+                />
+              </div>
+            </div>
+
+            <p id="input-error" class="input-error hidden" role="alert"></p>
+
+            <button id="btn-attack" type="submit" class="btn-attack">
+              Atacar com Raízes
+            </button>
+
+            <button id="btn-counter" type="button" class="btn-counter">
+              Não possui Raiz (Δ &lt; 0)
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= MODAL DE REGRAS (i) ================= -->
+    <div id="rules-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="rules-modal-title">
+      <div class="modal-card modal-card-wide">
+        <div class="modal-header">
+          <div>
+            <h2 id="rules-modal-title" class="modal-title">Grimório de Regras &amp; Danos</h2>
+            <p class="modal-subtitle">
+              Cada combatente inicia com 3 corações (6 Pontos de Vida · 1 Coração = 2 PV).
+            </p>
+          </div>
+          <button id="btn-close-rules" type="button" class="modal-close-btn" aria-label="Fechar regras">
+            ✕
+          </button>
+        </div>
+
+        <div class="rules-table-wrap">
+          <table class="rules-table">
+            <thead>
+              <tr>
+                <th>Ação do Jogador</th>
+                <th>Condição</th>
+                <th class="text-right">Efeito nos PV</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-emerald">Atacar com Raízes</td>
+                <td>2 raízes corretas</td>
+                <td class="text-right mono-bold text-emerald">-2 PV no Chefe</td>
+              </tr>
+              <tr>
+                <td class="text-amber">Atacar com Raízes</td>
+                <td>1 raiz correta</td>
+                <td class="text-right mono-bold text-amber">-1 PV no Chefe</td>
+              </tr>
+              <tr>
+                <td class="text-rose">Atacar com Raízes</td>
+                <td>0 raízes ou armadilha (Δ &lt; 0)</td>
+                <td class="text-right mono-bold text-rose">-2 PV em Você</td>
+              </tr>
+              <tr>
+                <td class="text-amber">Não possui Raiz (Δ &lt; 0)</td>
+                <td>Contra-feitiço certeiro (Δ &lt; 0)</td>
+                <td class="text-right mono-bold text-amber">-4 PV no Chefe</td>
+              </tr>
+              <tr>
+                <td class="text-rose">Não possui Raiz (Δ &lt; 0)</td>
+                <td>Equação tinha raízes reais</td>
+                <td class="text-right mono-bold text-rose">-2 PV em Você</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rules-tips-grid">
+          <div class="tip-box">
+            <div class="tip-title">Fórmula de Bhaskara</div>
+            <p class="mono-line">Δ = b² - 4 · a · c</p>
+            <p class="mono-line">x = (-b ± √Δ) / (2 · a)</p>
+          </div>
+          <div class="tip-box">
+            <div class="tip-title">Dicas de Preenchimento</div>
+            <ul class="tip-list">
+              <li>• A ordem entre R1 e R2 não importa.</li>
+              <li>• Raiz dupla (Δ = 0): repita o valor em R1 e R2.</li>
+              <li>• Decimais aceitam ponto (0.5) ou vírgula (0,5).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modal-actions-right">
+          <button id="btn-rules-ok" type="button" class="btn-modal-primary">
+            Entendido, voltar à arena
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL DE FIM DE JOGO ================= -->
+    <div id="endgame-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="endgame-title">
+      <div id="endgame-card" class="modal-card modal-card-endgame">
+        <div id="endgame-badge" class="endgame-icon-box"></div>
+        <h2 id="endgame-title" class="endgame-title">Vitória na Arena!</h2>
+        <p id="endgame-desc" class="endgame-desc"></p>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Turnos jogados</div>
+            <div id="stat-turnos" class="stat-value">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Acertos críticos</div>
+            <div id="stat-criticos" class="stat-value text-emerald">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Contra-feitiços</div>
+            <div id="stat-contra" class="stat-value text-amber">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Erros sofridos</div>
+            <div id="stat-erros" class="stat-value text-rose">0</div>
+          </div>
+        </div>
+
+        <div class="endgame-buttons">
+          <button id="btn-restart" type="button" class="btn-endgame-primary">
+            Jogar Novamente
+          </button>
+          <button id="btn-return-title" type="button" class="btn-endgame-secondary">
+            Tela Inicial
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./script.js"></script>
   </body>
 </html>
-

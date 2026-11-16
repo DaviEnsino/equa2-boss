@@ -4,17 +4,14 @@ import fs from 'fs';
 import path from 'path';
 import {defineConfig} from 'vite';
 
-export default defineConfig(({command}) => {
+export default defineConfig(() => {
   return {
-    base: command === 'build' ? '/equa2-boss/' : '/',
+    base: './',
     plugins: [
       react(),
       tailwindcss(),
-      // Copies src/assets into dist/ so root-relative URLs like
-      // "/src/assets/images/..." (e.g. generate_image output) still resolve
-      // in production builds. Do not remove.
       {
-        name: 'copy-unbundled-src-assets',
+        name: 'copy-static-root-assets',
         apply: 'build',
         closeBundle(error?: Error): void {
           if (error) {
@@ -25,6 +22,13 @@ export default defineConfig(({command}) => {
           const distAssets = path.resolve(distDir, 'src/assets');
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
+          }
+          for (const file of ['equacoes.json', 'favicon.ico']) {
+            const srcFile = path.resolve(__dirname, file);
+            const destFile = path.resolve(distDir, file);
+            if (fs.existsSync(distDir) && fs.existsSync(srcFile)) {
+              fs.copyFileSync(srcFile, destFile);
+            }
           }
         },
       },
