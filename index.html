@@ -22,6 +22,13 @@
       rel="stylesheet"
     />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#090d16" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Bhaskara RPG" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -123,19 +130,30 @@
         </p>
       </section>
 
-      <button id="btn-start" type="button" class="btn-primary-cta">
-        <svg viewBox="0 0 24 24" class="icon-svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
-          <line x1="13" y1="19" x2="19" y2="13" />
-          <line x1="16" y1="16" x2="20" y2="20" />
-          <line x1="19" y1="21" x2="21" y2="19" />
-          <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
-          <line x1="5" y1="14" x2="9" y2="18" />
-          <line x1="7" y1="17" x2="4" y2="20" />
-          <line x1="3" y1="19" x2="5" y2="21" />
-        </svg>
-        Começar Batalha
-      </button>
+      <div class="start-actions">
+        <button id="btn-start" type="button" class="btn-primary-cta">
+          <svg viewBox="0 0 24 24" class="icon-svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+            <line x1="13" y1="19" x2="19" y2="13" />
+            <line x1="16" y1="16" x2="20" y2="20" />
+            <line x1="19" y1="21" x2="21" y2="19" />
+            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+            <line x1="5" y1="14" x2="9" y2="18" />
+            <line x1="7" y1="17" x2="4" y2="20" />
+            <line x1="3" y1="19" x2="5" y2="21" />
+          </svg>
+          Começar Batalha
+        </button>
+
+        <button id="btn-install" type="button" class="btn-install hidden">
+          <svg viewBox="0 0 24 24" class="icon-sm" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Instalar App (Offline)
+        </button>
+      </div>
 
       <p class="start-shortcuts">Enter para iniciar · I para regras · M para áudio</p>
     </main>
@@ -441,6 +459,25 @@
       </div>
     </div>
 
-    <script type="module" src="./script.js"></script>
+    <!-- ================= MODAL DE INSTALAÇÃO iOS ================= -->
+    <div id="ios-install-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="ios-install-title">
+      <div class="modal-card modal-card-endgame">
+        <h2 id="ios-install-title" class="modal-title">Instalar no iPhone / iPad</h2>
+        <p class="endgame-desc">
+          1. Toque no botão <strong>Compartilhar</strong> na barra do Safari.<br />
+          2. Role para baixo e toque em <strong>Adicionar à Tela de Início</strong>.
+        </p>
+        <div class="modal-actions-right">
+          <button id="btn-close-ios-install" type="button" class="btn-modal-primary">Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicador discreto de modo offline (visível apenas sem conexão) -->
+    <div id="offline-badge" class="offline-badge hidden" role="status">
+      Modo Offline ativo — jogando com dados locais
+    </div>
+
+    <script defer src="./script.js"></script>
   </body>
 </html>

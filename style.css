@@ -11,9 +11,9 @@
   --accent-gold-hover: #fbbf24;
   --accent-crimson: #dc2626;
   --accent-emerald: #10b981;
-  --font-display: 'Cinzel', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-display: 'Cinzel', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 }
 
 *,
@@ -231,8 +231,17 @@ input:focus-visible {
   color: var(--text-muted);
 }
 
-.btn-primary-cta {
+.start-actions {
   margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.btn-primary-cta {
+  margin-top: 0;
   min-height: 52px;
   padding: 0.85rem 2rem;
   border: none;
@@ -250,6 +259,45 @@ input:focus-visible {
   cursor: pointer;
   box-shadow: 0 8px 28px rgba(245, 158, 11, 0.28);
   transition: background-color 150ms ease, transform 120ms ease;
+}
+
+.btn-install {
+  min-height: 52px;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  background: rgba(18, 25, 41, 0.9);
+  color: #fde68a;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.btn-install:hover {
+  border-color: #fbbf24;
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.offline-badge {
+  position: fixed;
+  bottom: 0.9rem;
+  left: 0.9rem;
+  z-index: 45;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(18, 25, 41, 0.94);
+  color: #fcd34d;
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary-cta:hover {

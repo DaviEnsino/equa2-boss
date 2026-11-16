@@ -23,7 +23,17 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
           }
-          for (const file of ['equacoes.json', 'favicon.ico']) {
+          for (const file of [
+            'script.js',
+            'equacoes.json',
+            'favicon.ico',
+            'sw.js',
+            'manifest.json',
+            'icon-192.png',
+            'icon-512.png',
+            'icon-maskable-512.png',
+            'apple-touch-icon.png',
+          ]) {
             const srcFile = path.resolve(__dirname, file);
             const destFile = path.resolve(distDir, file);
             if (fs.existsSync(distDir) && fs.existsSync(srcFile)) {

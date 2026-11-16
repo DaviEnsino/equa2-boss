@@ -1,0 +1,32 @@
+{
+  "id": "/equa2-boss/",
+  "name": "Bhaskara Boss Battle",
+  "short_name": "Bhaskara RPG",
+  "description": "RPG de turnos educativo para dominar equações do 2º grau e o discriminante (Δ).",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#090d16",
+  "background_color": "#090d16",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

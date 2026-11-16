@@ -101,6 +101,10 @@ const el = {
   statErros: document.getElementById('stat-erros'),
   btnRestart: document.getElementById('btn-restart'),
   btnReturnTitle: document.getElementById('btn-return-title'),
+  btnInstall: document.getElementById('btn-install'),
+  iosInstallModal: document.getElementById('ios-install-modal'),
+  btnCloseIosInstall: document.getElementById('btn-close-ios-install'),
+  offlineBadge: document.getElementById('offline-badge'),
 };
 
 // ================= ÁUDIO (Web Audio API) =================
@@ -625,8 +629,91 @@ function toggleMute() {
   el.btnMute.setAttribute('aria-label', state.muted ? 'Ativar som' : 'Silenciar som');
 }
 
+// ================= OFFLINE / PWA =================
+let deferredInstallPrompt = null;
+
+function isStandaloneMode() {
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true
+  );
+}
+
+function isIOSDevice() {
+  return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+}
+
+function updateOnlineIndicator() {
+  if (!el.offlineBadge) return;
+  const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
+  el.offlineBadge.classList.toggle('hidden', !offline);
+}
+
+function initPWA() {
+  updateOnlineIndicator();
+  window.addEventListener('online', updateOnlineIndicator);
+  window.addEventListener('offline', updateOnlineIndicator);
+
+  if (window.location.protocol !== 'file:' && 'serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+
+  if (isStandaloneMode()) return;
+
+  if (isIOSDevice() && el.btnInstall) {
+    el.btnInstall.classList.remove('hidden');
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    if (el.btnInstall) {
+      el.btnInstall.classList.remove('hidden');
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    if (el.btnInstall) {
+      el.btnInstall.classList.add('hidden');
+    }
+  });
+
+  if (el.btnInstall) {
+    el.btnInstall.addEventListener('click', async () => {
+      playSound('click');
+      if (deferredInstallPrompt) {
+        await deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          deferredInstallPrompt = null;
+          el.btnInstall.classList.add('hidden');
+        }
+      } else if (isIOSDevice() && el.iosInstallModal) {
+        el.iosInstallModal.classList.remove('hidden');
+      }
+    });
+  }
+
+  if (el.btnCloseIosInstall && el.iosInstallModal) {
+    el.btnCloseIosInstall.addEventListener('click', () => {
+      el.iosInstallModal.classList.add('hidden');
+    });
+    el.iosInstallModal.addEventListener('click', (e) => {
+      if (e.target === el.iosInstallModal) {
+        el.iosInstallModal.classList.add('hidden');
+      }
+    });
+  }
+}
+
 // ================= EVENTOS E INICIALIZAÇÃO =================
 async function loadEquations() {
+  if (window.location.protocol === 'file:') {
+    return;
+  }
   try {
     const response = await fetch('./equacoes.json');
     if (!response.ok) return;
@@ -731,4 +818,5 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
+initPWA();
 void loadEquations();
